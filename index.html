@@ -382,10 +382,11 @@
         </div>
 
         <div class="content">
-          <h1>Hi 🙂 <span class="mini-heart" aria-hidden="true"></span></h1>
+          <h1>
+            Hi Eloisa🙂 <span class="mini-heart" aria-hidden="true"></span>
+          </h1>
           <p class="sub">
-            A small, playful message from someone na nakikita ka halos
-            araw-araw… from another department. 👀
+            A small message from someone na nakikita ka halos araw-araw…👀
           </p>
 
           <div class="message" id="messageBox">
@@ -397,21 +398,21 @@
             </p>
 
             <div class="signature">
-              <span class="sign">— Anonymous</span>
-              <span>“professional kunwari”</span>
+              <span class="sign"></span>
+              <span>“Don”</span>
             </div>
           </div>
         </div>
 
         <div class="footer">
           <div class="hint">
-            Tip: Palitan mo lang yung text sa message box para swak sa vibe mo.
-            <br />Pwede mo rin i-print (Ctrl+P) for a cute note.
+            <!-- Tip: Palitan mo lang yung text sa message box para swak sa vibe mo.
+            <br />Pwede mo rin i-print (Ctrl+P) for a cute note. -->
           </div>
 
           <div class="btns">
-            <button class="btn" onclick="copyMessage()">Copy message</button>
-            <button class="btn" onclick="toggleAlt()">Switch vibe</button>
+            <!-- <button class="btn" onclick="copyMessage()">Copy message</button> -->
+            <button class="btn" onclick="toggleAlt()">More</button>
           </div>
         </div>
       </section>
@@ -429,23 +430,20 @@
       const messageBox = document.getElementById("messageBox");
 
       const versions = [
-        `Random lang… pero tuwing dumadaan ka,
-may isang tao dito na biglang nawawala sa focus.
+        `May boyfriend kana ba?
+         If wala, buti naman 😅.
+         If meron, di naman siya crush ko, ikaw yun. 💘`,
 
-Don’t worry—maayos naman siyang tao.
-Medyo affected lang. 😅`,
-        `May quick report lang:
+        `Hi 🙂,
 
-Kapag dumadaan ka, may 3-second pause sa utak ng isang tao.
-1 second tingin, 1 second pretend busy, 1 second “okay balik work.”
+        Wag kang mailang kung may napapalingon minsan sa’yo.
 
-Clue: nasa kabilang department lang siya. 👀`,
-        `FYI lang:
+        Hindi ‘yun masama.
+        Hindi rin weird.
 
-May taong biglang nagiging productive
-pagkatapos mong dumaan… kasi kailangan niyang bumawi.
+        May admirer ka lang.`,
 
-Sana okay ka lang. 😌`,
+        `Tanong lang, masungit kaba? haha, di naman? hmmm smile ka naman minsan kung makasalubong kita. nawawala kasi pagod ko pag nakikita kitang nakangiti, if may idea ka sino ako, smile ka sakin pag nakasalubong mo ako haha 🫣, pag ayaw mo okay lang naman, madapa ka sana.`,
       ];
 
       let idx = 0;
