@@ -42,6 +42,8 @@
 
       .wrap {
         width: min(720px, 100%);
+        position: relative;
+        z-index: 1;
       }
 
       .card {
@@ -210,6 +212,14 @@
   </head>
 
   <body>
+    <div class="float-hearts">
+      <span class="heart" style="left: 10%; animation-delay: 0s"></span>
+      <span class="heart" style="left: 25%; animation-delay: 2s"></span>
+      <span class="heart" style="left: 40%; animation-delay: 4s"></span>
+      <span class="heart" style="left: 60%; animation-delay: 1s"></span>
+      <span class="heart" style="left: 75%; animation-delay: 3s"></span>
+      <span class="heart" style="left: 90%; animation-delay: 5s"></span>
+    </div>
     <main class="wrap">
       <section class="card">
         <div class="topbar">
@@ -305,14 +315,14 @@
         document.getElementById("messageText").innerText = versions[idx];
       }
     </script>
-  </body>
 
-  <div class="float-hearts">
-    <span class="heart" style="left: 10%; animation-delay: 0s"></span>
-    <span class="heart" style="left: 25%; animation-delay: 2s"></span>
-    <span class="heart" style="left: 40%; animation-delay: 4s"></span>
-    <span class="heart" style="left: 60%; animation-delay: 1s"></span>
-    <span class="heart" style="left: 75%; animation-delay: 3s"></span>
-    <span class="heart" style="left: 90%; animation-delay: 5s"></span>
-  </div>
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </body>
 </html>
