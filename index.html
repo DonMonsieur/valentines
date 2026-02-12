@@ -155,6 +155,57 @@
         color: var(--accent);
         cursor: pointer;
       }
+
+      /* Floating Hearts */
+      .float-hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .heart {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        background: linear-gradient(135deg, #e11d48, #fb7185);
+        transform: rotate(45deg);
+        border-radius: 3px;
+        animation: floatUp 10s linear infinite;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        background: inherit;
+        border-radius: 50%;
+      }
+
+      .heart::before {
+        left: -7px;
+      }
+
+      .heart::after {
+        top: -7px;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) rotate(45deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) rotate(45deg);
+          opacity: 0;
+        }
+      }
     </style>
   </head>
 
@@ -236,15 +287,15 @@
       // More button messages
       const versions = [
         `May boyfriend ka na ba?
-If wala, buti naman 😅
-If meron, di naman siya crush ko… ikaw yun. 💘`,
+        If wala, buti naman 😅
+        If meron, di naman siya crush ko… ikaw yun. 💘`,
 
         `Wag kang mailang kung may napapalingon minsan sa’yo.
-Hindi yun weird.
-May admirer ka lang 🙂`,
+        Hindi yun weird.
+        May admirer ka lang 🙂`,
 
-        `Smile ka naman minsan pag makasalubong kita.
-Nawawala pagod ko pag nakikita kitang nakangiti. 🫣`,
+        `Kung may idea ka sino ako, smile ka naman minsan pag makasalubong kita.
+        Nawawala pagod ko pag nakikita kitang nakangiti. 🫣 Kung ayaw mo, madapa ka sana haha`,
       ];
 
       let idx = 0;
@@ -255,4 +306,13 @@ Nawawala pagod ko pag nakikita kitang nakangiti. 🫣`,
       }
     </script>
   </body>
+
+  <div class="float-hearts">
+    <span class="heart" style="left: 10%; animation-delay: 0s"></span>
+    <span class="heart" style="left: 25%; animation-delay: 2s"></span>
+    <span class="heart" style="left: 40%; animation-delay: 4s"></span>
+    <span class="heart" style="left: 60%; animation-delay: 1s"></span>
+    <span class="heart" style="left: 75%; animation-delay: 3s"></span>
+    <span class="heart" style="left: 90%; animation-delay: 5s"></span>
+  </div>
 </html>
