@@ -38,6 +38,9 @@
           radial-gradient(800px 520px at 80% 20%, #ffe6b3 0%, transparent 55%),
           linear-gradient(180deg, var(--bg1), var(--bg2));
         padding: 24px;
+
+        /* Push your page down so the bar doesn't cover content */
+        padding-top: 84px;
       }
 
       .wrap {
@@ -208,10 +211,88 @@
           opacity: 0;
         }
       }
+
+      /* --- Top music bar --- */
+      .musicbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.78);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .music-title {
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 46vw;
+      }
+
+      .music-btn {
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .music-label {
+        font-size: 12px;
+        opacity: 0.75;
+        white-space: nowrap;
+      }
+
+      .musicbar input[type="range"] {
+        width: 140px;
+      }
+
+      .music-hint {
+        font-size: 12px;
+        opacity: 0.75;
+        white-space: nowrap;
+      }
     </style>
   </head>
 
   <body>
+    <!-- ✅ TOP MUSIC BAR -->
+    <div class="musicbar" role="region" aria-label="Music player">
+      <div class="music-title">🎵 Always Remember Us This Way — Lady Gaga</div>
+
+      <button class="music-btn" id="musicToggle" type="button">
+        ⏳ Loading…
+      </button>
+
+      <label class="music-label" for="musicVol">Vol</label>
+      <input
+        id="musicVol"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.8"
+      />
+
+      <span class="music-hint" id="musicHint" aria-live="polite"></span>
+    </div>
+
+    <!-- ✅ AUDIO ELEMENT -->
+    <!-- IMPORTANT:
+         - If your file is .mp4, set type="video/mp4"
+         - If it's actually audio mp3, use .mp3 and type="audio/mpeg"
+    -->
+    <audio id="bgMusic" preload="auto" loop playsinline>
+      <source src="don2.mp4" type="video/mp4" />
+    </audio>
+
     <div class="float-hearts">
       <span class="heart" style="left: 10%; animation-delay: 0s"></span>
       <span class="heart" style="left: 25%; animation-delay: 2s"></span>
@@ -220,6 +301,7 @@
       <span class="heart" style="left: 75%; animation-delay: 3s"></span>
       <span class="heart" style="left: 90%; animation-delay: 5s"></span>
     </div>
+
     <main class="wrap">
       <section class="card">
         <div class="topbar">
@@ -233,7 +315,6 @@
             A small message from someone na nakikita ka halos araw-araw… 👀
           </p>
 
-          <!-- Middle Name Unlock -->
           <div class="unlock-box">
             <label>🔐 Enter your middle name to unlock the message</label>
             <input
@@ -247,7 +328,6 @@
             <div class="error-msg" id="errorMsg">Hmm… parang mali ata 👀</div>
           </div>
 
-          <!-- Locked Message -->
           <div class="message locked" id="messageBox">
             <p id="messageText">
               Random lang… pero tuwing dumadaan ka, may isang tao dito na
@@ -264,6 +344,66 @@
         </div>
       </section>
     </main>
+
+    <script>
+      // ✅ MUSIC: play on load (NOTE: many browsers block autoplay with sound)
+      const music = document.getElementById("bgMusic");
+      const musicToggle = document.getElementById("musicToggle");
+      const musicVol = document.getElementById("musicVol");
+      const musicHint = document.getElementById("musicHint");
+
+      function setMusicBtn(isPlaying) {
+        musicToggle.textContent = isPlaying ? "⏸ Pause" : "▶️ Play";
+      }
+
+      async function forcePlayOnLoad() {
+        // set initial volume
+        music.volume = Number(musicVol.value || 0.8);
+
+        try {
+          // Try to play immediately
+          await music.play();
+          setMusicBtn(true);
+          musicHint.textContent = "";
+        } catch (e) {
+          // Autoplay blocked (common) or file path/type mismatch
+          setMusicBtn(false);
+          musicHint.textContent = "Autoplay blocked—tap Play once.";
+          console.log("Autoplay failed:", e);
+        }
+      }
+
+      // Play on load
+      window.addEventListener("load", () => {
+        forcePlayOnLoad();
+      });
+
+      // Toggle button
+      musicToggle.addEventListener("click", async () => {
+        try {
+          if (music.paused) {
+            await music.play();
+            setMusicBtn(true);
+            musicHint.textContent = "";
+          } else {
+            music.pause();
+            setMusicBtn(false);
+          }
+        } catch (e) {
+          setMusicBtn(false);
+          musicHint.textContent = "Could not play. Check file path/type.";
+          console.log("Play failed:", e);
+        }
+      });
+
+      // Volume
+      musicVol.addEventListener("input", () => {
+        music.volume = Number(musicVol.value);
+      });
+
+      music.addEventListener("play", () => setMusicBtn(true));
+      music.addEventListener("pause", () => setMusicBtn(false));
+    </script>
 
     <script>
       // Date
@@ -283,10 +423,9 @@
           .getElementById("answerInput")
           .value.trim()
           .toLowerCase();
-
         const errorMsg = document.getElementById("errorMsg");
 
-        if (input.toLowerCase() === correctAnswer) {
+        if (input === correctAnswer) {
           messageBox.classList.remove("locked");
           errorMsg.style.display = "none";
         } else {
@@ -297,15 +436,15 @@
       // More button messages
       const versions = [
         `May boyfriend ka na ba?
-        If wala, buti naman 😅
-        If meron, di naman siya crush ko… ikaw yun. 💘`,
+If wala, buti naman 😅
+If meron, di naman siya crush ko… ikaw yun. 💘`,
 
         `Wag kang mailang kung may napapalingon minsan sa’yo.
-        Hindi yun weird.
-        May admirer ka lang 🙂`,
+Hindi yun weird.
+May admirer ka lang 🙂`,
 
         `Kung may idea ka sino ako, smile ka naman minsan pag makasalubong kita.
-        Nawawala pagod ko pag nakikita kitang nakangiti. 🫣 Kung ayaw mo, madapa ka sana haha`,
+Nawawala pagod ko pag nakikita kitang nakangiti. 🫣 Kung ayaw mo, madapa ka sana haha`,
       ];
 
       let idx = 0;
